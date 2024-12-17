@@ -12,7 +12,7 @@ private:
 
 
 public:
-    void addItem(int id, const std::string& name, double price,int stockQuantity);
+    void addItem(int id, const std::string& name, double price,int stockQuantity,int supplierCode);
     void viewItems() const;
     void updateItem(int id, const std::string& newName, double newPrice, int stockQuantity);
     void deleteItem(int id);

@@ -19,6 +19,8 @@ public:
     void deleteCustomer(int id);
 
     int customerCount();
+
+    const Customer* findCustomerById(int id) const;
 };
 
 

@@ -1,8 +1,8 @@
 #include "Item_manager.h"
 #include <iostream>
 
-void Item_manager::addItem(int id, const std::string& name, double price, int stockQuantity) {
-    items.emplace_back(id, name, price, stockQuantity);
+void Item_manager::addItem(int id, const std::string& name, double price, int stockQuantity,int supplierId) {
+    items.emplace_back(id, name, price, stockQuantity,supplierId);
     std::cout << "Item added successfully!\n" << std::endl;
 }
 

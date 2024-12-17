@@ -11,11 +11,13 @@ private:
     std::string name;
     double price;
     int stockQuantity;
+    int supplierId;
+
 
 
 public:
     
-    Item(int id, const std::string& name, double price, int stockQuantity);
+    Item(int id, const std::string& name, double price, int stockQuantity,int supplierId);
 
     int getId() const;
 
@@ -36,6 +38,11 @@ public:
     void addStock(int quantity);
 
     void reduceStock(int quantity);
+
+    void setSupplierId(int supplierId);
+    
+    int getSupplierId(int itemCode);
+
 
 };
 

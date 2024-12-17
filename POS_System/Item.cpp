@@ -1,7 +1,7 @@
 #include "Item.h"
 
-Item::Item(int id, const std::string& name, double price, int stockQuantity)
-    : id(id), name(name), price(price), stockQuantity(stockQuantity) {}
+Item::Item(int id, const std::string& name, double price, int stockQuantity, int supplierId)
+    : id(id), name(name), price(price), stockQuantity(stockQuantity), supplierId(supplierId){}
 
 
 int Item::getId() const {
@@ -44,4 +44,13 @@ void Item::display() const {
         << ", Price: $" << price
         << ", Qty :" << stockQuantity
         << std::endl;
+}
+
+
+void Item::setSupplierId(int supplier_id) {
+    supplierId = supplier_id;
+}
+
+int Item::getSupplierId(int itemCode) {
+    return supplierId;
 }

@@ -61,3 +61,12 @@ int customer_manager::customerCount() {
 
 
 }
+
+const Customer* customer_manager::findCustomerById(int id) const {
+    for (const auto& customer : customers) {
+        if (customer.getId() == id) {
+            return &customer;  // Return a pointer to the customer
+        }
+    }
+    return nullptr;  // Return nullptr if the customer is not found
+}

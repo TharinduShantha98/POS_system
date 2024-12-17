@@ -36,17 +36,24 @@ void addItem(Item_manager& itemManager) {
     std::string name;
     double price;
     int qty;
+    int supplierId;
 
     std::cout << "Enter Item ID: ";
     std::cin >> id;
     std::cin.ignore();
     std::cout << "Enter Item Name: ";
     std::getline(std::cin, name);
+    std::cin.ignore();
     std::cout << "Enter Item Price: ";
     std::cin >> price;
+    std::cin.ignore();
     std::cout << "Enter Qty: ";
     std::cin >> qty;
-    itemManager.addItem(id, name, price, qty);
+    std::cin.ignore();
+    std::cout << "Enter supplierId: ";
+    std::cin >> supplierId;
+    std::cin.ignore();
+    itemManager.addItem(id, name, price, qty, supplierId);
 
 }
 
@@ -318,12 +325,6 @@ void supplierManagers(Supplier_manager& supplierManager) {
         }
     }
 }
-
-
-
-
-
-
  
 int main()
 {
