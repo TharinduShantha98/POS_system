@@ -18,6 +18,7 @@ public:
     void deleteItem(int id);
     bool reduceItemStock(int id, int quantity); // For order processing
     void restockItem(int id, int quantity);    // Restock an item
+    const Item* findItemById(int id) const;
 
 
 };

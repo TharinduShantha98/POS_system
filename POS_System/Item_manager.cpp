@@ -85,4 +85,15 @@ void Item_manager::restockItem(int id, int quantity) {
 }
 
 
+const Item* Item_manager::findItemById(int id) const {
+    for (const auto& item : items) {
+        if (item.getId() == id) {
+            return &item;  // Return a pointer to the item
+        }
+    }
+    return nullptr;  // Return nullptr if the item is not found
+}
+
+
+
 

@@ -5,6 +5,8 @@ Order::Order(int orderId, int customerId) : orderId(orderId), customerId(custome
 
 // Add item to the order
 void Order::addItemToOrder(const Item& item, int quantity) {
+    std::cout << "quentity " << quantity << "\n";
+
     for (int i = 0; i < quantity; ++i) {
         orderedItems.push_back(item);
     }

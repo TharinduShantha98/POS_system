@@ -12,7 +12,7 @@ void Supplier_manager::viewSuppliers() const {
         std::cout << "No suppliers available.\n";
     }
     else {
-        std::cout << "--- Supplier List ---\n";
+        std::cout << "--------------------------------------------------- Supplier List -------------------------------------------------- \n";
         for (const auto& supplier : suppliers) {
             supplier.display();
         }
