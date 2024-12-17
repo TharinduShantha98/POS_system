@@ -1,0 +1,324 @@
+#include <iostream>
+#include <string>
+#include "item_manager.h"
+#include "customer_manager.h"
+#include "Supplier_manager.h"
+
+
+void displayMainDashboard() {
+    
+    std::cout << "===================================" << std::endl;
+    std::cout << "      Simple POS System Dashboard  " << std::endl;
+    std::cout << "===================================" << std::endl;
+    std::cout << "1. Manage Items" << std::endl;
+    std::cout << "2. Manage Customers" << std::endl;
+    std::cout << "3. Place Order" << std::endl;
+    std::cout << "4. Exit" << std::endl;
+    std::cout << "===================================" << std::endl;
+    std::cout << "Enter your choice: ";
+}
+
+void displayItemMenu() {
+    
+    std::cout << "\n--- Manage Items ---" << std::endl;
+    std::cout << "1. Add Item" << std::endl;
+    std::cout << "2. View Items" << std::endl;
+    std::cout << "3. Update Items" << std::endl;
+    std::cout << "4. Delete Items" << std::endl;
+    std::cout << "5. Go Back to Dashboard" << std::endl;
+    std::cout << "Enter your choice: ";
+}
+
+
+void addItem(Item_manager& itemManager) {
+    int id;
+    std::string name;
+    double price;
+    int qty;
+
+    std::cout << "Enter Item ID: ";
+    std::cin >> id;
+    std::cin.ignore();
+    std::cout << "Enter Item Name: ";
+    std::getline(std::cin, name);
+    std::cout << "Enter Item Price: ";
+    std::cin >> price;
+    std::cout << "Enter Qty: ";
+    std::cin >> qty;
+    itemManager.addItem(id, name, price, qty);
+
+}
+
+
+
+void viewItems(const Item_manager& itemManager){
+    itemManager.viewItems();
+    
+}
+
+
+void updateItems(Item_manager& itemManager) {
+   
+
+    int id;
+    std::string newName;
+    double newPrice;
+    int qty;
+
+    std::cout << "Enter Item ID to Update: ";
+    std::cin >> id;
+    std::cin.ignore();
+    std::cout << "Enter New Name: ";
+    std::getline(std::cin, newName);
+    std::cout << "Enter New Price: ";
+    std::cin >> newPrice;
+    std::cout << "Enter Qty: ";
+    std::cin >> qty;
+    itemManager.updateItem(id, newName, newPrice, qty);
+ 
+
+}
+
+
+void deleteItems(Item_manager& itemManager) {
+
+    int id;
+    std::cout << "Enter Item ID to Delete: ";
+    std::cin >> id;
+    itemManager.deleteItem(id);
+
+
+}
+
+
+void manageItems(Item_manager& itemManager) {
+    
+    int itemChoice;
+    bool managingItems = true;
+    
+    while (managingItems) {
+        displayItemMenu();
+        std::cin >> itemChoice;
+
+        switch (itemChoice) {
+        case 1:
+            system("CLS");
+            addItem(itemManager);
+            break;
+        case 2:
+            system("CLS");   
+            viewItems(itemManager);
+            break;
+        case 3:
+            system("CLS");
+            viewItems(itemManager);
+            updateItems(itemManager);
+            break;
+        case 4:
+            system("CLS");
+            viewItems(itemManager);
+            deleteItems(itemManager);
+            break;
+        case 5:
+            managingItems = false;
+            break;
+        default:
+            std::cout << "Invalid choice! Please try again.\n" << std::endl;
+        }
+    }
+}
+
+
+
+void dispalyCustomerMenu() {
+
+    std::cout << "\n--- customer Manage ---" << std::endl;
+    std::cout << "1. Add customer" << std::endl;
+    std::cout << "2. View customer" << std::endl;
+    std::cout << "3. Update customer" << std::endl;
+    std::cout << "4. Delete customer" << std::endl;
+    std::cout << "5. Go Back to Dashboard" << std::endl;
+    std::cout << "Enter your choice: ";
+
+}
+
+
+void addCustomer(customer_manager& customerManager) {
+
+    int id;
+    std::string customerName;
+    std::string mobileNumber;
+
+    std::cout << "Enter customer name: ";
+    std::cin >> customerName;
+    std::cin.ignore();
+    std::cout << "Enter mobileNumber: ";
+    std::cin >> mobileNumber;
+    
+  
+    int customerCount  =  customerManager.customerCount();
+    customerCount = customerCount + 1;
+    customerManager.addCustomer(customerCount, customerName,mobileNumber);
+
+
+}
+
+
+void viewCustomer(const customer_manager& customerManager) {
+    customerManager.viewCustomers();
+
+}
+
+void updateCustomer(customer_manager& customerManager) {
+
+    int id;
+    std::string mobileNumber;
+    std::cout << "Enter Customer ID to update: ";
+    std::cin >> id;
+    std::cin.ignore();
+    std::cout << "Enter new mobile number: ";
+    std::getline(std::cin, mobileNumber);
+    customerManager.updateCustomer(id, mobileNumber);
+
+}
+void deleteCustomer(customer_manager& customerManager) {
+
+    int id;
+    std::cout << "Enter Customer ID to delete: ";
+    std::cin >> id;
+    customerManager.deleteCustomer(id);
+}
+
+
+
+void dispalySupplierMenu() {
+
+    std::cout << "\n--- Supplier Manage ---" << std::endl;
+    std::cout << "1. Add Supplier" << std::endl;
+    std::cout << "2. View Supplier" << std::endl;
+    std::cout << "3. find by Supplier Id" << std::endl;
+    std::cout << "4. Go Back to Dashboard" << std::endl;
+    std::cout << "Enter your choice: ";
+
+}
+
+
+void customerManage(customer_manager& customerManager) {
+
+    int customerChoise;
+    bool customerManage = true;
+    //Adding sample customers
+
+    while (customerManage) {
+        dispalyCustomerMenu();
+        std::cin >> customerChoise;
+
+        switch (customerChoise) {
+        case 1:
+            system("CLS");
+            addCustomer(customerManager);
+            break;
+        case 2:
+            system("CLS");
+            viewCustomer(customerManager);
+            break;
+        case 3:
+            system("CLS");
+            updateCustomer(customerManager);
+            break;
+        case 4:
+            customerManage = false;
+            break;
+        default:
+            std::cout << "Invalid choice! Please try again.\n" << std::endl;
+        }
+    }
+
+
+
+}
+
+
+
+void supplierManager(Supplier_manager& supplierManager) {
+
+    int supplierChose;
+    bool supplierManger = true;
+
+    while (supplierManger) {
+        
+        std::cin >> supplierChose;
+
+        switch (supplierChose) {
+        case 1:
+            system("CLS");
+         
+            break;
+        case 2:
+            system("CLS");
+        
+            break;
+        case 3:
+            system("CLS");
+           
+            break;
+        case 4:
+            system("CLS");
+          
+            break;
+        case 5:
+            
+            break;
+        default:
+            std::cout << "Invalid choice! Please try again.\n" << std::endl;
+        }
+    }
+}
+
+
+
+
+
+
+ 
+int main()
+{
+    Item_manager itemManager;
+    customer_manager customerManager;
+    Supplier_manager supplierManager;
+
+
+
+    int itemChoice;
+    bool running  = true;
+
+
+    while (running) {
+        displayMainDashboard();
+        std::cin >> itemChoice;
+
+        switch (itemChoice) {
+        case 1:
+            system("CLS");
+            manageItems(itemManager);
+            break;
+        case 2:
+            system("CLS");
+            customerManage(customerManager);
+            break;
+        case 3:
+
+            break;
+        case 4:
+            std::cout << "Exiting... Thank you!" << std::endl;
+            running = false;
+        default:
+            std::cout << "Invalid choice! Please try again.\n" << std::endl;
+        }
+    }
+    return 0;
+
+
+
+}
+

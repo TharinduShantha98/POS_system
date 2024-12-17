@@ -1,0 +1,12 @@
+*.exe
+*.o
+*.obj
+*.log
+*.class
+*.dll
+*.pdb
+*.vcxproj*
+*.vscode/
+build/
+.vs/
+.x64/
