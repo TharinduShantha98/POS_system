@@ -12,6 +12,7 @@ void displayMainDashboard() {
     std::cout << "===================================" << std::endl;
     std::cout << "1. Manage Items" << std::endl;
     std::cout << "2. Manage Customers" << std::endl;
+    std::cout << "2. Manage Supplier" << std::endl;
     std::cout << "3. Place Order" << std::endl;
     std::cout << "4. Exit" << std::endl;
     std::cout << "===================================" << std::endl;
@@ -191,16 +192,7 @@ void deleteCustomer(customer_manager& customerManager) {
 
 
 
-void dispalySupplierMenu() {
 
-    std::cout << "\n--- Supplier Manage ---" << std::endl;
-    std::cout << "1. Add Supplier" << std::endl;
-    std::cout << "2. View Supplier" << std::endl;
-    std::cout << "3. find by Supplier Id" << std::endl;
-    std::cout << "4. Go Back to Dashboard" << std::endl;
-    std::cout << "Enter your choice: ";
-
-}
 
 
 void customerManage(customer_manager& customerManager) {
@@ -240,27 +232,79 @@ void customerManage(customer_manager& customerManager) {
 
 
 
-void supplierManager(Supplier_manager& supplierManager) {
+void dispalySupplierMenu() {
+    std::cout << "\n--- Supplier Manage ---" << std::endl;
+    std::cout << "1. Add Supplier" << std::endl;
+    std::cout << "2. View Supplier" << std::endl;
+    std::cout << "3. find by Supplier Id" << std::endl;
+    std::cout << "4. Go Back to Dashboard" << std::endl;
+    std::cout << "Enter your choice: ";
+}
+
+void handleAddSupplier(Supplier_manager& supplierManager) {
+    int id;
+    std::string name, contactNumber, email, address;
+
+    std::cout << "Enter Supplier ID: ";
+    std::cin >> id;
+    std::cin.ignore(); 
+
+    std::cout << "Enter Supplier Name: ";
+    std::getline(std::cin, name);
+
+    std::cout << "Enter Contact Number: ";
+    std::getline(std::cin, contactNumber);
+
+    std::cout << "Enter Email Address: ";
+    std::getline(std::cin, email);
+
+    std::cout << "Enter Address: ";
+    std::getline(std::cin, address);
+
+    supplierManager.addSupplier(id, name, contactNumber, email, address);
+    std::cout << "Supplier added successfully!" << std::endl;
+}
+
+void handleViewSuppliers(const Supplier_manager& supplierManager) {
+    supplierManager.viewSuppliers();
+}
+
+void handleFindSupplierById(const Supplier_manager& supplierManager) {
+    int id;
+    std::cout << "Enter Supplier ID to search: ";
+    std::cin >> id;
+
+    const Supplier* supplier = supplierManager.findSupplierById(id);
+    if (supplier) {
+        std::cout << "Supplier Found:\n";
+        supplier->display();
+    }
+    else {
+        std::cout << "Supplier with ID " << id << " not found.\n";
+    }
+}
+
+void supplierManagers(Supplier_manager& supplierManager) {
 
     int supplierChose;
     bool supplierManger = true;
 
     while (supplierManger) {
-        
+        dispalySupplierMenu();
         std::cin >> supplierChose;
 
         switch (supplierChose) {
         case 1:
             system("CLS");
-         
+            handleAddSupplier(supplierManager);
             break;
         case 2:
             system("CLS");
-        
+            handleViewSuppliers(supplierManager);
             break;
         case 3:
             system("CLS");
-           
+            handleFindSupplierById(supplierManager);
             break;
         case 4:
             system("CLS");
@@ -307,7 +351,8 @@ int main()
             customerManage(customerManager);
             break;
         case 3:
-
+            system("CLS");
+            supplierManagers(supplierManager);
             break;
         case 4:
             std::cout << "Exiting... Thank you!" << std::endl;
