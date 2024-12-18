@@ -1,13 +1,13 @@
 #include "Place_order.h"
 
 
-void Place_order::placeOrder(customer_manager& customerManager, Item_manager& itemManager) {
+void Place_order::placeOrder(CustomerManager& customerManager, Item_manager& itemManager) {
     int customerId;
     std::cout << "Enter Customer ID to place an order: ";
     std::cin >> customerId;
 
     // Find customer by ID
-    const Customer* customer = customerManager.findCustomerById(customerId);
+    const BaseCustomer* customer = customerManager.findCustomerById(customerId);
     if (!customer) {
         std::cout << "Customer not found. Please try again.\n";
         return;

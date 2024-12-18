@@ -4,7 +4,7 @@
 #include "customer_manager.h"
 #include "Supplier_manager.h"
 #include "Place_order.h"
-
+#include "CustomerManager.h"
 
 void displayMainDashboard() {
     
@@ -158,68 +158,94 @@ void dispalyCustomerMenu() {
     std::cout << "===================================" << std::endl;
     std::cout << "          customer Manage          " << std::endl;
     std::cout << "===================================" << std::endl;
-    std::cout << "1. Add customer" << std::endl;
-    std::cout << "2. View customer" << std::endl;
-    std::cout << "3. Update customer" << std::endl;
-    std::cout << "4. Delete customer" << std::endl;
-    std::cout << "5. Go Back to Dashboard" << std::endl;
+    std::cout << "1. Add Regular Customer\n";
+    std::cout << "2. Add Premium Customer\n";
+    std::cout << "3. View All Customers\n";
+    std::cout << "4. Find Customer by ID\n";
+    std::cout << "5. Delete Customer\n";
+    std::cout << "6. View Total Customers\n";
+    std::cout << "7. Go Back to Dashboard\n";
     std::cout << "Enter your choice: ";
 
 }
 
 
-void addCustomer(customer_manager& customerManager) {
-
+void addRegularCustomer(CustomerManager& manager) {
     int id;
-    std::string customerName;
-    std::string mobileNumber;
+    std::string name, mobileNumber;
 
-    std::cout << "Enter customer name: ";
-    std::cin >> customerName;
-    std::cin.ignore();
-    std::cout << "Enter mobileNumber: ";
-    std::cin >> mobileNumber;
-    
-  
-    int customerCount  =  customerManager.customerCount();
-    customerCount = customerCount + 1;
-    customerManager.addCustomer(customerCount, customerName,mobileNumber);
-
-
-}
-
-
-void viewCustomer(const customer_manager& customerManager) {
-    customerManager.viewCustomers();
-
-}
-
-void updateCustomer(customer_manager& customerManager) {
-
-    int id;
-    std::string mobileNumber;
-    std::cout << "Enter Customer ID to update: ";
+    std::cout << "Enter Customer ID: ";
     std::cin >> id;
-    std::cin.ignore();
-    std::cout << "Enter new mobile number: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::cout << "Enter Name: ";
+    std::getline(std::cin, name);
+
+    std::cout << "Enter Mobile Number: ";
     std::getline(std::cin, mobileNumber);
-    customerManager.updateCustomer(id, mobileNumber);
 
+    manager.addRegularCustomer(id, name, mobileNumber);
+    std::cout << "Regular customer added successfully!\n";
 }
-void deleteCustomer(customer_manager& customerManager) {
 
+
+
+void addPremiumCustomer(CustomerManager& manager) {
     int id;
+    std::string name, membershipId;
+
+    std::cout << "Enter Customer ID: ";
+    std::cin >> id;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::cout << "Enter Name: ";
+    std::getline(std::cin, name);
+
+    std::cout << "Enter Membership ID: ";
+    std::getline(std::cin, membershipId);
+
+    manager.addPremiumCustomer(id, name, membershipId);
+    std::cout << "Premium customer added successfully!\n";
+}
+
+
+void findCustomerById(CustomerManager& manager) {
+    int id;
+
+    std::cout << "Enter Customer ID to search: ";
+    std::cin >> id;
+
+    try {
+        const BaseCustomer* customer = manager.findCustomerById(id);
+        std::cout << "Customer found:\n";
+        customer->display();
+    }
+    catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+}
+
+void viewAllCustomers(CustomerManager& manager) {
+    manager.viewCustomers();
+    
+}
+
+void deleteCustomer(CustomerManager& manager) {
+    int id;
+
     std::cout << "Enter Customer ID to delete: ";
     std::cin >> id;
-    customerManager.deleteCustomer(id);
+
+    manager.deleteCustomer(id);
+}
+void viewTotolCustomers(CustomerManager& manager) {
+    manager.getTotalCustomers();
 }
 
 
 
 
-
-
-void customerManage(customer_manager& customerManager) {
+void customerManage(CustomerManager& customerManager) {
 
     int customerChoise;
     bool customerManage = true;
@@ -232,21 +258,29 @@ void customerManage(customer_manager& customerManager) {
         switch (customerChoise) {
         case 1:
             system("CLS");
-            addCustomer(customerManager);
+            addRegularCustomer(customerManager);
             break;
         case 2:
             system("CLS");
-            viewCustomer(customerManager);
+            addPremiumCustomer(customerManager);
             break;
         case 3:
             system("CLS");
-            updateCustomer(customerManager);
+            viewAllCustomers(customerManager);
             break;
         case 4:
             system("CLS");
-            deleteCustomer(customerManager);
+            findCustomerById(customerManager);
             break;
         case 5:
+            system("CLS");
+            deleteCustomer(customerManager);
+            break;
+        case 6:
+            system("CLS");
+            viewTotolCustomers(customerManager);
+            break;
+        case 7:
             system("CLS");
             customerManage = false;
             break;
@@ -357,14 +391,14 @@ void dispalyPlaceOrder() {
 
 
 
-void setPlaceOrder(Place_order& place_order,customer_manager& customerManager, Item_manager& itemManager) {
+void setPlaceOrder(Place_order& place_order, CustomerManager& customerManager, Item_manager& itemManager) {
     place_order.placeOrder(customerManager, itemManager);
 
 }
 
 
 
-void place_order(Place_order& placeOrder, customer_manager& customerManager, Item_manager& itemManager) {
+void place_order(Place_order& placeOrder, CustomerManager& customerManager, Item_manager& itemManager) {
 
     int placeOrderChoise;
     bool placeOrderMange = true;
@@ -402,7 +436,10 @@ int main()
     customer_manager customerManager;
     Supplier_manager supplierManager;
     Place_order placeOrder;
+   
 
+
+    CustomerManager manager;
    
 
     int itemChoice;
@@ -420,7 +457,7 @@ int main()
             break;
         case 2:
             system("CLS");
-            customerManage(customerManager);
+            customerManage(manager);
             break;
         case 3:
             system("CLS");
@@ -434,7 +471,7 @@ int main()
             itemManager.addItem(2, "orange", 12, 120, 1);
             customerManager.addCustomer(1, "Tharindu", "0786667878");*/
 
-            place_order(placeOrder, customerManager, itemManager);
+            place_order(placeOrder, manager, itemManager);
             break;
         case 5:
             system("CLS");
