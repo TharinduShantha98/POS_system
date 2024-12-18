@@ -21,8 +21,9 @@ void displayMainDashboard() {
 }
 
 void displayItemMenu() {
-    
-    std::cout << "\n--- Manage Items ---" << std::endl;
+    std::cout << "===================================" << std::endl;
+    std::cout << "           Manage Items           " << std::endl;
+    std::cout << "===================================" << std::endl;
     std::cout << "1. Add Item" << std::endl;
     std::cout << "2. View Items" << std::endl;
     std::cout << "3. Update Items" << std::endl;
@@ -61,7 +62,8 @@ void addItem(Item_manager& itemManager,Supplier_manager& supplierManager) {
         itemManager.addItem(id, name, price, qty, supplierId);
     }
     else {
-        std::cout << "Your supplier id is wrong !!! ";
+        system("CLS");
+        std::cout << "Your supplier id is wrong !!! \n";
         supplierManager.viewSuppliers();
 
     }
@@ -141,6 +143,7 @@ void manageItems(Item_manager& itemManager,Supplier_manager& supplierManager) {
             deleteItems(itemManager);
             break;
         case 5:
+            system("CLS");
             managingItems = false;
             break;
         default:
@@ -152,8 +155,9 @@ void manageItems(Item_manager& itemManager,Supplier_manager& supplierManager) {
 
 
 void dispalyCustomerMenu() {
-
-    std::cout << "\n--- customer Manage ---" << std::endl;
+    std::cout << "===================================" << std::endl;
+    std::cout << "          customer Manage          " << std::endl;
+    std::cout << "===================================" << std::endl;
     std::cout << "1. Add customer" << std::endl;
     std::cout << "2. View customer" << std::endl;
     std::cout << "3. Update customer" << std::endl;
@@ -239,6 +243,11 @@ void customerManage(customer_manager& customerManager) {
             updateCustomer(customerManager);
             break;
         case 4:
+            system("CLS");
+            deleteCustomer(customerManager);
+            break;
+        case 5:
+            system("CLS");
             customerManage = false;
             break;
         default:
@@ -246,14 +255,14 @@ void customerManage(customer_manager& customerManager) {
         }
     }
 
-
-
 }
 
 
 
 void dispalySupplierMenu() {
-    std::cout << "\n--- Supplier Manage ---" << std::endl;
+    std::cout << "===================================" << std::endl;
+    std::cout << "          Supplier Manage         " << std::endl;
+    std::cout << "===================================" << std::endl;
     std::cout << "1. Add Supplier" << std::endl;
     std::cout << "2. View Supplier" << std::endl;
     std::cout << "3. find by Supplier Id" << std::endl;
@@ -338,7 +347,9 @@ void supplierManagers(Supplier_manager& supplierManager) {
 
 
 void dispalyPlaceOrder() {
-    std::cout << "\n--- Place Order Manage ---" << std::endl;
+    std::cout << "===================================" << std::endl;
+    std::cout << "          Place Order Manage      " << std::endl;
+    std::cout << "===================================" << std::endl;
     std::cout << "1. place order" << std::endl;
     std::cout << "2. Go Back to Dashboard" << std::endl;
     std::cout << "Enter your choice: ";
@@ -363,13 +374,18 @@ void place_order(Place_order& placeOrder, customer_manager& customerManager, Ite
         dispalyPlaceOrder();
         std::cin >> placeOrderChoise;
 
-        switch (placeOrderMange){
+        switch (placeOrderChoise){
         case   1:
+            system("CLS");
             setPlaceOrder(placeOrder, customerManager, itemManager);
             break;
-
-        default:
+        case 2:
+            system("CLS");
+            placeOrderMange = false;
             break;
+        default:
+            std::cout << "Invalid choice! Please try again.\n" << std::endl;
+           
         }
 
     }
@@ -413,14 +429,15 @@ int main()
         case 4:
             system("CLS");
 
-            supplierManager.addSupplier(1, "lamal", "0769773032", 
-                "a@gmail.com", "qwer");
-            itemManager.addItem(1, "Kamal", 12, 120, 1);
-            customerManager.addCustomer(1, "Tharindu", "0786667878");
+           /* supplierManager.addSupplier(1, "lamal", "0769773032", "a@gmail.com", "qwer");
+            itemManager.addItem(1, "apple", 12, 120, 1);
+            itemManager.addItem(2, "orange", 12, 120, 1);
+            customerManager.addCustomer(1, "Tharindu", "0786667878");*/
 
             place_order(placeOrder, customerManager, itemManager);
             break;
         case 5:
+            system("CLS");
             std::cout << "Exiting... Thank you!" << std::endl;
             running = false;
         default:
