@@ -5,6 +5,10 @@
 #include "Supplier_manager.h"
 #include "Place_order.h"
 #include "CustomerManager.h"
+#include <limits>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "Ws2_32.lib")
 
 void displayMainDashboard() {
     
@@ -176,7 +180,7 @@ void addRegularCustomer(CustomerManager& manager) {
 
     std::cout << "Enter Customer ID: ";
     std::cin >> id;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore();
 
     std::cout << "Enter Name: ";
     std::getline(std::cin, name);
@@ -196,7 +200,7 @@ void addPremiumCustomer(CustomerManager& manager) {
 
     std::cout << "Enter Customer ID: ";
     std::cin >> id;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore();
 
     std::cout << "Enter Name: ";
     std::getline(std::cin, name);
@@ -428,6 +432,46 @@ void place_order(Place_order& placeOrder, CustomerManager& customerManager, Item
 }
 
 
+void connectToServer() {
+    WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        std::cerr << "WSAStartup failed." << std::endl;
+        return;
+    }
+
+    SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (clientSocket == INVALID_SOCKET) {
+        std::cerr << "Socket creation failed." << std::endl;
+        WSACleanup();
+        return;
+    }
+
+    sockaddr_in serverAddress;
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_port = htons(8081);
+    inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
+
+    if (connect(clientSocket, (sockaddr*)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR) {
+        std::cerr << "Connection to server failed." << std::endl;
+        closesocket(clientSocket);
+        WSACleanup();
+        return;
+    }
+
+    const char* message = "Hello from Client!";
+    send(clientSocket, message, strlen(message), 0);
+
+    char response[512];
+    int bytesReceived = recv(clientSocket, response, sizeof(response), 0);
+    if (bytesReceived > 0) {
+        response[bytesReceived] = '\0';
+        std::cout << "Server: " << response << std::endl;
+    }
+
+    closesocket(clientSocket);
+    WSACleanup();
+}
+
 
 
 int main()
@@ -445,7 +489,7 @@ int main()
     int itemChoice;
     bool running  = true;
 
-
+    connectToServer();
     while (running) {
         displayMainDashboard();
         std::cin >> itemChoice;
